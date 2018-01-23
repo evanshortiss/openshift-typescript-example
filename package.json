@@ -1,0 +1,31 @@
+{
+  "name": "openshift-ts",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node src/server.js | pino"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evanshortiss/openshift-typescript-example.git"
+  },
+  "author": "Evan Shortiss <evanshortiss@gmail.com> (http://evanshortiss.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/evanshortiss/openshift-typescript-example/issues"
+  },
+  "homepage": "https://github.com/evanshortiss/openshift-typescript-example#readme",
+  "dependencies": {
+    "env-var": "~3.1.0",
+    "express": "~4.16.2",
+    "pino": "~4.10.3",
+    "typescript": "~2.6.2"
+  },
+  "devDependencies": {
+    "@types/express": "~4.11.0",
+    "@types/node": "~9.3.0",
+    "@types/pino": "~4.7.1"
+  }
+}

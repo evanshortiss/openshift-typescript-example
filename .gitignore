@@ -1,0 +1,7 @@
+node_modules
+.DS_Store
+
+# These are generated - safe to ignore
+*.js
+*.js.map
+*.d.ts
