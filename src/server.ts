@@ -14,7 +14,7 @@ const app = express()
 // Our "Hello, World" endpoint. Can be passed a querystring "name" parameter
 app.get('/', (req, res) => {
   const name = req.query.name || 'World'
-  const message = `Hello, ${name}!`
+  const message = `Dia dhuit, ${name}!`
 
   log.debug(`returing message "${message}"`)
 

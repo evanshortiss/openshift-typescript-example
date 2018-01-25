@@ -1,7 +1,7 @@
 {
   "name": "openshift-ts",
   "version": "0.1.0",
-  "description": "",
+  "description": "A sample TypeScript application that can be deployed on OpenShift",
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
