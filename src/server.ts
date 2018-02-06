@@ -2,7 +2,7 @@ import * as express from 'express'
 import * as env from 'env-var'
 import * as pino from 'pino'
 
-const PORT = env.get('PORT', '8080').asIntPositive()
+const PORT = env.get('PORT', '3030').asIntPositive()
 const LOG_LEVEL = env.get('LOG_LEVEL', 'debug').asString()
 
 const log = pino({
@@ -10,6 +10,9 @@ const log = pino({
 })
 
 const app = express()
+
+// Include sensible security headers by default
+app.use(require('helmet')())
 
 // Our "Hello, World" endpoint. Can be passed a querystring "name" parameter
 app.get('/', (req, res) => {

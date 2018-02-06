@@ -20,6 +20,7 @@
   "dependencies": {
     "env-var": "~3.1.0",
     "express": "~4.16.2",
+    "helmet": "~3.10.0",
     "pino": "~4.10.3",
     "typescript": "~2.6.2"
   },
