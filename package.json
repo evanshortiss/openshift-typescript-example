@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && node src/server.js | pino"
+    "start": "node src/server.js | pino",
+    "compile-start": "tsc node src/server.js | pino",
+    "postinstall": "tsc"
   },
   "repository": {
     "type": "git",
