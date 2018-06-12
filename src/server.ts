@@ -15,7 +15,7 @@ const app = express()
 app.use(require('helmet')())
 
 // Our "Hello, World" endpoint. Can be passed a querystring "name" parameter
-app.get('/', (req, res) => {
+app.get('/', (req: express.Request, res: express.Response) => {
   const name = req.query.name || 'World'
   const message = `Dia dhuit, ${name}!`
 
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 })
 
 // Support for health probes. Just return a "200 OK"
-app.get('/health', (req, res) => {
+app.get('/health', (req: express.Request, res: express.Response) => {
   log.debug('responding to health probe')
   res.end('ok')
 })
