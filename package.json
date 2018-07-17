@@ -1,13 +1,13 @@
 {
   "name": "openshift-ts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A sample TypeScript application that can be deployed on OpenShift",
   "main": "src/server.js",
   "scripts": {
-    "compile-start": "tsc node src/server.js | pino",
+    "build": "tsc",
     "nodeshift": "nodeshift",
-    "postinstall": "tsc",
     "start": "node src/server.js | pino",
+    "start-dev": "nodemon -e ts -x ts-node src/server.ts | pino",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,16 +21,18 @@
   },
   "homepage": "https://github.com/evanshortiss/openshift-typescript-example#readme",
   "dependencies": {
-    "@types/express": "~4.11.0",
-    "@types/node": "~9.3.0",
-    "@types/pino": "~4.7.1",
     "env-var": "~3.1.0",
     "express": "~4.16.2",
     "helmet": "~3.10.0",
-    "pino": "~4.10.3",
-    "typescript": "~2.6.2"
+    "pino": "~4.10.3"
   },
   "devDependencies": {
-    "nodeshift": "~1.9.0"
+    "@types/express": "~4.11.0",
+    "@types/node": "~9.3.0",
+    "@types/pino": "~4.7.1",
+    "nodemon": "~1.18.3",
+    "nodeshift": "~1.9.0",
+    "ts-node": "~7.0.0",
+    "typescript": "~2.6.2"
   }
 }

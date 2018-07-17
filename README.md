@@ -74,7 +74,7 @@ application locally in an environment that matches that it will use when
 deployed on  OpenShift Online.
 
 ```
-$ s2i build . registry.access.redhat.com/rhscl/nodejs-6-rhel7 openshift-ts
+$ s2i build . registry.access.redhat.com/rhscl/nodejs-10-rhel7 openshift-ts
 $ docker run -p 8080:8080 -dit --name openshift-ts openshift-ts
 ```
 
