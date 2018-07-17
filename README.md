@@ -54,13 +54,15 @@ $ cd ts-openshift
 
 $ npm install
 
+$ npm run build
+
 $ npm start
 ```
 
-If you're making changes you can compile them and run the server by running:
+If you're developing locally you automated code watching and reloading via:
 
 ```
-npm run compile-start
+npm run start-dev
 ```
 
 ## Running Locally using Docker and s2i
