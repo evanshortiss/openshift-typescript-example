@@ -17,7 +17,7 @@ app.use(require('helmet')())
 // Our "Hello, World" endpoint. Can be passed a querystring "name" parameter
 app.get('/', (req: express.Request, res: express.Response) => {
   const name = req.query.name || 'World'
-  const message = `Dia dhuit, ${name}!`
+  const message = `Hola, ${name}!`
 
   log.debug(`returing message "${message}"`)
 
