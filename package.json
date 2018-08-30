@@ -7,7 +7,7 @@
     "build": "tsc",
     "nodeshift": "nodeshift",
     "postinstall": "npm run build",
-    "precommit": "prettier --write --single-quote src/*.ts",
+    "precommit": "prettier --write --single-quote src/*.ts && git add .",
     "start": "node src/server.js | pino",
     "start-dev": "nodemon -e ts -x ts-node src/server.ts | pino",
     "test": "echo \"Error: no test specified\" && exit 1"

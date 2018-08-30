@@ -8,3 +8,4 @@ package-lock.json
 *.d.ts
 
 tmp
+openshift.local.clusterup
