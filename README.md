@@ -1,7 +1,8 @@
 # TypeScript Sample Application
 
 This repository provides a simple starting point for running TypeScript
-applications on OpenShift. A blogpost that runs through the details of this
+applications on OpenShift. It can also be applied to applications that use Babel
+or other transpilers. A blogpost that runs through the details of this
 repository and OpenShift can be found [here](http://evanshortiss.com/development/openshift/javascript/typescript/2018/02/15/ts-on-openshift.html).
 
 ## Running on OpenShift via Nodeshift
@@ -54,13 +55,15 @@ $ cd ts-openshift
 
 $ npm install
 
+$ npm run build
+
 $ npm start
 ```
 
-If you're making changes you can compile them and run the server by running:
+If you're developing locally you automated code watching and reloading via:
 
 ```
-npm run compile-start
+npm run start-dev
 ```
 
 ## Running Locally using Docker and s2i
@@ -74,7 +77,11 @@ application locally in an environment that matches that it will use when
 deployed on  OpenShift Online.
 
 ```
-$ s2i build . registry.access.redhat.com/rhscl/nodejs-6-rhel7 openshift-ts
+# Build the latest local commit into a container image
+# If you have uncommitted changes add the "--copy" flag
+$ s2i build . registry.access.redhat.com/rhscl/nodejs-8-rhel7 openshift-ts
+
+# Run our container image
 $ docker run -p 8080:8080 -dit --name openshift-ts openshift-ts
 ```
 
