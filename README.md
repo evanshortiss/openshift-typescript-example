@@ -5,10 +5,13 @@ applications on OpenShift. It can also be applied to applications that use Babel
 or other transpilers. A blogpost that runs through the details of this
 repository and OpenShift can be found [here](http://evanshortiss.com/development/openshift/javascript/typescript/2018/02/15/ts-on-openshift.html).
 
+You can use this repository as a template, just click the green "Use this
+template" button at the top of this page on GitHub.
+
 ## Running on OpenShift via Nodeshift
 To use this method of deployment you'll need:
 
-* Node.js v8 or later
+* Node.js v10 or later
 * An OpenShift instance via:
   * [OpenShift Online Free Tier](https://www.openshift.com/)
   * [OpenShift Origin](https://github.com/openshift/origin#getting-started)
@@ -79,7 +82,7 @@ deployed on  OpenShift Online.
 ```
 # Build the latest local commit into a container image
 # If you have uncommitted changes add the "--copy" flag
-$ s2i build . registry.access.redhat.com/rhscl/nodejs-8-rhel7 openshift-ts
+$ s2i build . registry.access.redhat.com/rhscl/nodejs-10-rhel7 openshift-ts
 
 # Run our container image
 $ docker run -p 8080:8080 -dit --name openshift-ts openshift-ts
