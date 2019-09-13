@@ -7,5 +7,6 @@ package-lock.json
 *.js.map
 *.d.ts
 
+# Nodeshift and other temp files
 tmp
 openshift.local.clusterup

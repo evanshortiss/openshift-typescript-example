@@ -3,8 +3,10 @@ import * as env from 'env-var';
 import * as pino from 'pino';
 import * as path from 'path';
 
-const PORT = env.get('PORT', '8080').asIntPositive();
-const LOG_LEVEL = env.get('LOG_LEVEL', 'debug').asString();
+const PORT = env.get('PORT', '8080').asPortNumber();
+const LOG_LEVEL = env
+  .get('LOG_LEVEL', 'debug')
+  .asEnum(Object.keys(pino.levels.values));
 
 const log = pino({
   level: LOG_LEVEL
@@ -12,8 +14,13 @@ const log = pino({
 
 const app = express();
 
+// Add kubernetes liveness and readiness probes at
+// /api/health/readiness and /api/health/liveness
+require('kube-probe')(app);
+
 // Include sensible security headers by default
 app.use(require('helmet')());
+// Log incoming requests
 app.use(require('morgan')('combined'));
 
 // Respond with an index.html file for the default route
