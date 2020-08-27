@@ -41,12 +41,6 @@ app.get('/api/hello', (req: express.Request, res: express.Response) => {
   });
 });
 
-// Support for health probes. Just return a "200 OK"
-app.get('/health', (req: express.Request, res: express.Response) => {
-  log.debug('responding to health probe');
-  res.end('ok');
-});
-
 app.listen(PORT, (err: any) => {
   if (err) {
     log.error('error starting server', err);
