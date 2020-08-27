@@ -3,13 +3,14 @@ import * as env from 'env-var';
 import * as pino from 'pino';
 import * as path from 'path';
 
-const PORT = env.get('PORT', '8080').asPortNumber();
+const PORT = env.get('PORT').default('8080').asPortNumber();
 const LOG_LEVEL = env
-  .get('LOG_LEVEL', 'debug')
+  .get('LOG_LEVEL')
+  .default('debug')
   .asEnum(Object.keys(pino.levels.values));
 
 const log = pino({
-  level: LOG_LEVEL
+  level: LOG_LEVEL,
 });
 
 const app = express();
@@ -36,7 +37,7 @@ app.get('/api/hello', (req: express.Request, res: express.Response) => {
   log.debug(`returing message "${message}"`);
 
   res.json({
-    message
+    message,
   });
 });
 
@@ -48,9 +49,9 @@ app.get('/health', (req: express.Request, res: express.Response) => {
 
 app.listen(PORT, (err: any) => {
   if (err) {
-    log.error('serve error', err);
+    log.error('error starting server', err);
     throw err;
   }
 
-  log.info(`server listening on port ${PORT}`);
+  log.info(`🚀 server listening on port ${PORT}`);
 });
