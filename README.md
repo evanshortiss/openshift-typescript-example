@@ -80,15 +80,18 @@ With both tools installed, execute the following commands to run your
 application locally. This will create a container that matches the one created
 using an OpenShift Build.
 
-```
-# Build the latest local commit into a container image
-# If you have uncommitted changes add the "--copy" flag
-$ s2i build . registry.access.redhat.com/rhscl/nodejs-12-rhel8 openshift-ts
+```bash
+# Upstream builder image
+export BASE_IMAGE=centos/nodejs-12-centos7
+
+# Official Red Hat builder image
+# You can use this if you have logged in to registry.redhat.io
+# export BASE_IMAGE=registry.redhat.io/rhel8/nodejs-12
+
+# Build the latest local commit into a container image. The "--copy" flag
+# indicates we build the local source and not remote git origin
+$ s2i build --copy . $BASE_IMAGE openshift-ts
 
 # Run our container image
 $ docker run -p 8080:8080 -dit --name openshift-ts openshift-ts
 ```
-
-* `s2i` will build the source code into image.
-* The image will be tagged as "openshift-ts".
-* The base image used the official Red Hat Node.js v12 image.
