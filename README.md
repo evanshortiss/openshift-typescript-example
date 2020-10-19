@@ -1,24 +1,25 @@
 # TypeScript Sample Application
 
 This repository provides a simple starting point for running TypeScript
-applications on OpenShift. It can also be applied to applications that use Babel
-or other transpilers. A blogpost that runs through the details of this
-repository and OpenShift can be found [here](http://evanshortiss.com/development/openshift/javascript/typescript/2018/02/15/ts-on-openshift.html).
+applications on OpenShift. It can also be applied to applications that use
+Babel or other transpilers.
+
+A blogpost that runs through the details of this repository and OpenShift can
+be found [here](http://evanshortiss.com/development/openshift/javascript/typescript/2018/02/15/ts-on-openshift.html).
 
 You can use this repository as a template, just click the green "Use this
 template" button at the top of this page on GitHub.
 
-## Running on OpenShift via Nodeshift
+## Running on OpenShift via NodeShift
 To use this method of deployment you'll need:
 
-* Node.js v10 or later
-* An OpenShift instance via:
-  * [OpenShift Online Free Tier](https://www.openshift.com/)
-  * [OpenShift Origin](https://github.com/openshift/origin#getting-started)
+* Node.js v12 or later
+* OpenShift 4.x (Run OpenShift 4.x locally using [CodeReady Containers](https://developers.redhat.com/products/codeready-containers/overview))
 
-Nodeshift is a neat CLI that simplifies deployment of Node.js applications on
-OpenShift. This project incldues Nodeshift in `devDependencies` so you can
-simply run the following to deploy it on an OpenShift instance:
+NodeShift is a neat CLI that simplifies deployment of Node.js applications on
+OpenShift. This project incldues NodeShift in `devDependencies`.
+
+You can run the following to deploy it on an OpenShift instance:
 
 ```
 $ git clone git@github.com:evanshortiss/openshift-typescript-example.git ts-openshift
@@ -29,9 +30,9 @@ $ cd ts-openshift
 $ oc login
 
 # Choose the project you'd like to deploy this applicaion into
-$ oc project myproject
+$ oc new-project ts-example
 
-# Build and deploy
+# Build, deploy, and expose an endpoint for the service
 $ npm run nodeshift -- --expose
 ```
 
@@ -45,8 +46,8 @@ $ npm run nodeshift -- --expose --strictSSL=false
 ## Running Locally without Docker
 To run this application locally you'll need:
 
-* Node.js v6 or later
-* npm v3 or later
+* Node.js v12 or later
+* npm v6 or later
 * Git
 
 Exectute the following commands to start the program locally:
@@ -63,7 +64,7 @@ $ npm run build
 $ npm start
 ```
 
-If you're developing locally you automated code watching and reloading via:
+If you're developing locally, start a live reload server like so:
 
 ```
 npm run start-dev
@@ -75,20 +76,22 @@ To perform the following steps you'll need:
 * [Docker](https://docs.docker.com/release-notes/) (v17.x tested)
 * [s2i](https://github.com/openshift/source-to-image/releases) (v1.1.7 tested)
 
-With both tools installed you can execute the following commands to run your
-application locally in an environment that matches that it will use when
-deployed on  OpenShift Online.
+With both tools installed, execute the following commands to run your
+application locally. This will create a container that matches the one created
+using an OpenShift Build.
 
-```
-# Build the latest local commit into a container image
-# If you have uncommitted changes add the "--copy" flag
-$ s2i build . registry.access.redhat.com/rhscl/nodejs-10-rhel7 openshift-ts
+```bash
+# Upstream builder image
+export BASE_IMAGE=centos/nodejs-12-centos7
+
+# Official Red Hat builder image
+# You can use this if you have logged in to registry.redhat.io
+# export BASE_IMAGE=registry.redhat.io/rhel8/nodejs-12
+
+# Build the latest local commit into a container image. The "--copy" flag
+# indicates we build the local source and not remote git origin
+$ s2i build --copy . $BASE_IMAGE openshift-ts
 
 # Run our container image
 $ docker run -p 8080:8080 -dit --name openshift-ts openshift-ts
 ```
-
-This instructs `s2i` to build our source code into an image that will be tagged
-as "openshift-ts". The base image used the official Red Hat Node.js v6 image.
-Once the build is complete we run it using Docker and expose its port 8080 to
-our local port 8080.
