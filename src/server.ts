@@ -46,11 +46,6 @@ app.get('/health', (req: express.Request, res: express.Response) => {
   res.end('ok');
 });
 
-app.listen(PORT, (err: any) => {
-  if (err) {
-    log.error('serve error', err);
-    throw err;
-  }
-
+app.listen(PORT, () => {
   log.info(`server listening on port ${PORT}`);
 });
