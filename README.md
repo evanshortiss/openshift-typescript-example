@@ -43,7 +43,7 @@ to do the following to bypass the self-signed certificate issues:
 $ npm run nodeshift -- --expose --strictSSL=false
 ```
 
-## Running Locally without Docker
+## Run Locally without Docker
 To run this application locally you'll need:
 
 * Node.js v12 or later
@@ -53,15 +53,13 @@ To run this application locally you'll need:
 Exectute the following commands to start the program locally:
 
 ```
-$ git clone git@github.com:evanshortiss/openshift-typescript-example.git ts-openshift
+git clone git@github.com:evanshortiss/openshift-typescript-example.git ts-openshift
 
-$ cd ts-openshift
+cd ts-openshift
 
-$ npm install
-
-$ npm run build
-
-$ npm start
+npm instal
+npm run build
+npm start
 ```
 
 If you're developing locally, start a live reload server like so:
@@ -70,28 +68,31 @@ If you're developing locally, start a live reload server like so:
 npm run start-dev
 ```
 
-## Running Locally using Docker and s2i
+## Build Locally using Source-to-Image (s2i)
 To perform the following steps you'll need:
 
-* [Docker](https://docs.docker.com/release-notes/) (v17.x tested)
-* [s2i](https://github.com/openshift/source-to-image/releases) (v1.1.7 tested)
+* [Docker](https://docs.docker.com/release-notes/) (v19.x tested)
+* [s2i](https://github.com/openshift/source-to-image/releases) (v1.1.13 tested)
 
 With both tools installed, execute the following commands to run your
 application locally. This will create a container that matches the one created
 using an OpenShift Build.
 
 ```bash
-# Upstream builder image
-export BASE_IMAGE=centos/nodejs-12-centos7
+# Run the s2i build script
+./scripts/s2i.sh
 
-# Official Red Hat builder image
-# You can use this if you have logged in to registry.redhat.io
-# export BASE_IMAGE=registry.redhat.io/rhel8/nodejs-12
-
-# Build the latest local commit into a container image. The "--copy" flag
-# indicates we build the local source and not remote git origin
-$ s2i build --copy . $BASE_IMAGE openshift-ts
-
-# Run our container image
-$ docker run -p 8080:8080 -dit --name openshift-ts openshift-ts
+# Run the container image
+docker run -p 8080:8080 quay.io/evanshortiss/openshift-s2i-typescript-example
 ```
+
+## Running Local Dev Mode using Docker Compose
+To perform the following steps you'll need:
+
+* [Docker](https://docs.docker.com/release-notes/) (v19.x tested)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+
+Run the `docker-compose up` command from the root of the repository to start
+Node.js and Redis containers.
+
+The application will be available on port 8080.

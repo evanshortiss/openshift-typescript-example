@@ -1,17 +1,8 @@
-import * as express from 'express';
-import * as env from 'env-var';
-import * as pino from 'pino';
+import express from 'express';
 import * as path from 'path';
-
-const PORT = env.get('PORT').default('8080').asPortNumber();
-const LOG_LEVEL = env
-  .get('LOG_LEVEL')
-  .default('debug')
-  .asEnum(Object.keys(pino.levels.values));
-
-const log = pino({
-  level: LOG_LEVEL,
-});
+import { PORT } from './config';
+import { getViewCount } from './redis';
+import log from './log';
 
 const app = express();
 
@@ -25,7 +16,11 @@ app.use(require('helmet')());
 app.use(require('morgan')('combined'));
 
 // Respond with an index.html file for the default route
-app.get('/', (req: express.Request, res: express.Response) => {
+app.get('/', async (req: express.Request, res: express.Response) => {
+  // Include a view count header if Redis is connected
+  const viewCount = await getViewCount();
+  res.setHeader('x-view-count', viewCount ? viewCount : 'cache unavailable');
+
   res.sendFile(path.resolve('./views/index.html'));
 });
 
@@ -34,7 +29,7 @@ app.get('/api/hello', (req: express.Request, res: express.Response) => {
   const name = req.query.name || 'World';
   const message = `Hello, ${name}!`;
 
-  log.debug(`returing message "${message}"`);
+  log.debug(`returning message: "${message}"`);
 
   res.json({
     message,
