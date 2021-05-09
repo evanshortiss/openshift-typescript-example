@@ -10,6 +10,7 @@ const config = {
 
   REDIS_HOST: get('REDIS_HOST').asString(),
   REDIS_PORT: get('REDIS_PORT').default('6379').asPortNumber(),
+  REDIS_PASS: get('REDIS_PASS').asString(),
 };
 
 export = config;

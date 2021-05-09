@@ -1,5 +1,5 @@
 import redis from 'redis';
-import { REDIS_HOST, REDIS_PORT } from './config';
+import { REDIS_HOST, REDIS_PORT, REDIS_PASS } from './config';
 import log from './log';
 
 let client!: redis.RedisClient;
@@ -9,6 +9,7 @@ if (REDIS_HOST) {
   client = redis.createClient({
     host: REDIS_HOST,
     port: REDIS_PORT,
+    password: REDIS_PASS,
   });
 }
 

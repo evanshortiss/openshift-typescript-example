@@ -4,6 +4,7 @@ services:
   redis:
     container_name: redis
     image: redis:6.2-alpine
+    command: redis-server --requirepass redispass
   ts-node:
     depends_on:
       - redis
@@ -13,7 +14,8 @@ services:
     ports:
       - 8080:8080/tcp
     environment:
-      REDIS_HOST: 'redis'
+      REDIS_PASS: redispass
+      REDIS_HOST: redis
     volumes:
       - '.:/usr/app/'
     restart: unless-stopped
