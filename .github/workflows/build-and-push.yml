@@ -23,6 +23,7 @@ jobs:
 
       - name: Source to Image Build
         uses: redhat-actions/s2i-build@v2
+        id: build_image
         with:
           builder_image: registry.access.redhat.com/ubi8/nodejs-12
           image: openshift-s2i-typescript-example
@@ -30,7 +31,7 @@ jobs:
           tags: latest ${{ github.sha }}
           # List of environment variable key-value pairs to pass to the s2i builder context
           env_vars: HUSKY_SKIP_INSTALL=1
-      
+
       - name: Push To Quay Action
         uses: redhat-actions/push-to-registry@v2
         with:
