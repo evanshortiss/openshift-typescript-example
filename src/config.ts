@@ -1,5 +1,7 @@
-import { get } from 'env-var';
+import { from, logger } from 'env-var';
 import * as pino from 'pino';
+
+const { get } = from(process.env, {}, logger);
 
 const config = {
   PORT: get('PORT').default('8080').asPortNumber(),
