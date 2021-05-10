@@ -9,7 +9,7 @@ const config = {
     .asEnum(Object.keys(pino.levels.values)),
 
   REDIS_HOST: get('REDIS_HOST').asString(),
-  REDIS_PORT: get('REDIS_PORT').default('6379').asPortNumber(),
+  REDIS_PORT: get('REDIS_PORT').default(6379).asPortNumber(),
   REDIS_PASS: get('REDIS_PASS').asString(),
 };
 
