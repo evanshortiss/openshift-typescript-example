@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build and Push to Quay
+
+on:
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Source to Image Build
+        uses: redhat-actions/s2i-build@v2
+        with:
+          builder_image: registry.access.redhat.com/ubi8/nodejs-12
+          image: openshift-s2i-typescript-example
+          # The tags of the image to build, separated by a space
+          tags: latest ${{ github.sha }}
+          # List of environment variable key-value pairs to pass to the s2i builder context
+          env_vars: HUSKY_SKIP_INSTALL=1
+      
+      - name: Push To Quay Action
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build_image.outputs.image }}
+          tags: ${{ steps.build_image.outputs.tags }}
+          registry: quay.io/evanshortiss
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
