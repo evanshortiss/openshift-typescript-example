@@ -50,7 +50,7 @@ To run this application locally you'll need:
 * npm v6 or later
 * Git
 
-Exectute the following commands to start the program locally:
+Execute the following commands to start the program locally:
 
 ```
 git clone git@github.com:evanshortiss/openshift-typescript-example.git ts-openshift
