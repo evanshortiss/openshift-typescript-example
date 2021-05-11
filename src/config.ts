@@ -10,9 +10,9 @@ const config = {
     .default('debug')
     .asEnum(Object.keys(pino.levels.values)),
 
-  REDIS_HOST: get('REDIS_HOST').asString(),
-  REDIS_PORT: get('REDIS_PORT').default(6379).asPortNumber(),
-  REDIS_PASS: get('REDIS_PASS').asString(),
+  REDIS_SERVICE_HOST: get('REDIS_SERVICE_HOST').asString(),
+  REDIS_SERVICE_PORT: get('REDIS_SERVICE_PORT').default(6379).asPortNumber(),
+  REDIS_SERVICE_PASS: get('REDIS_SERVICE_PASS').asString(),
 };
 
 export = config;

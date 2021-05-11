@@ -1,14 +1,19 @@
 import express from 'express';
-import * as path from 'path';
 import { PORT } from './config';
 import { getViewCount } from './redis';
 import log from './log';
+import exphbs from 'express-handlebars';
 
 const app = express();
+const hbs = exphbs();
 
 // Add kubernetes liveness and readiness probes at
 // /api/health/readiness and /api/health/liveness
 require('kube-probe')(app);
+
+// Configure handlebars rendering
+app.engine('handlebars', hbs);
+app.set('view engine', 'handlebars');
 
 // Include sensible security headers by default
 app.use(require('helmet')());
@@ -19,9 +24,8 @@ app.use(require('morgan')('combined'));
 app.get('/', async (req: express.Request, res: express.Response) => {
   // Include a view count header if Redis is connected
   const viewCount = await getViewCount();
-  res.setHeader('x-view-count', viewCount ? viewCount : 'cache unavailable');
 
-  res.sendFile(path.resolve('./views/index.html'));
+  res.render('index', { viewCount });
 });
 
 // Our "Hello, World" endpoint. Can be passed a querystring "name" parameter

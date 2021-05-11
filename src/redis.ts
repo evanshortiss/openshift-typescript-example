@@ -1,15 +1,21 @@
 import redis from 'redis';
-import { REDIS_HOST, REDIS_PORT, REDIS_PASS } from './config';
+import {
+  REDIS_SERVICE_HOST,
+  REDIS_SERVICE_PORT,
+  REDIS_SERVICE_PASS,
+} from './config';
 import log from './log';
 
 let client!: redis.RedisClient;
 
-if (REDIS_HOST) {
-  log.info(`connecting redis client to: ${REDIS_HOST}:${REDIS_PORT}`);
+if (REDIS_SERVICE_HOST) {
+  log.info(
+    `connecting redis client to: ${REDIS_SERVICE_HOST}:${REDIS_SERVICE_PORT}`
+  );
   client = redis.createClient({
-    host: REDIS_HOST,
-    port: REDIS_PORT,
-    password: REDIS_PASS,
+    host: REDIS_SERVICE_HOST,
+    port: REDIS_SERVICE_PORT,
+    password: REDIS_SERVICE_PASS,
   });
 }
 

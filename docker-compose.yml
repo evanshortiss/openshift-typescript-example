@@ -14,8 +14,8 @@ services:
     ports:
       - 8080:8080/tcp
     environment:
-      REDIS_PASS: redispass
-      REDIS_HOST: redis
+      REDIS_SERVICE_PASS: redispass
+      REDIS_SERVICE_HOST: redis
     volumes:
       - '.:/usr/app/'
     restart: unless-stopped
